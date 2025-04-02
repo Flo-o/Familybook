@@ -12,130 +12,70 @@
     }
 
     .book {
-      position: relative;
       width: 90%;
       max-width: 800px;
       margin: 0 auto;
-      padding-top: 20px;
-      perspective: 2000px;
+      padding: 20px 0;
     }
 
     .page {
-      position: absolute;
-      width: 100%;
-      height: 80vh;
       background: #fffbe7;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       border: 1px solid #ccc;
-      transform-origin: left;
-      transition: transform 1s ease;
       padding: 40px;
-      box-sizing: border-box;
-      backface-visibility: hidden;
-      overflow-y: auto;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     .page h2 {
       margin-top: 0;
     }
 
-    .page.flipped {
-      transform: rotateY(-180deg);
-      z-index: 0;
-    }
-
-    .nav-buttons {
-      text-align: center;
-      margin: 20px;
-    }
-
-    .nav-buttons button {
-      padding: 10px 20px;
-      margin: 0 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* Mobile Ansicht */
-    @media (max-width: 768px) {
+    /* Optional: Desktop-Blättereffekt */
+    @media (min-width: 1024px) {
       .book {
-        perspective: none;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 20px;
+        scroll-snap-type: x mandatory;
       }
 
       .page {
-        position: static;
-        transform: none !important;
-        height: auto;
-        margin-bottom: 20px;
-        box-shadow: none;
-        border: 1px solid #ccc;
+        min-width: 80%;
+        height: 80vh;
+        scroll-snap-align: start;
+        flex-shrink: 0;
       }
 
-      .nav-buttons {
-        display: none;
+      body {
+        overflow-x: hidden;
       }
     }
   </style>
 </head>
 <body>
-  <div class="book" id="book">
-    <!-- Seiten werden per JavaScript eingefügt -->
+  <div class="book">
+    <!-- Seiten 2010–2025 -->
+    <!-- Du kannst hier natürlich Inhalte pro Jahr ergänzen -->
+    <!-- Automatisch per JavaScript erzeugen wäre möglich, aber hier ist es bewusst statisch & einfach -->
+
+    <!-- Beispielseite -->
+    <div class="page"><h2>Jahr 2010</h2><p>Inhalte für 2010</p></div>
+    <div class="page"><h2>Jahr 2011</h2><p>Inhalte für 2011</p></div>
+    <div class="page"><h2>Jahr 2012</h2><p>Inhalte für 2012</p></div>
+    <div class="page"><h2>Jahr 2013</h2><p>Inhalte für 2013</p></div>
+    <div class="page"><h2>Jahr 2014</h2><p>Inhalte für 2014</p></div>
+    <div class="page"><h2>Jahr 2015</h2><p>Inhalte für 2015</p></div>
+    <div class="page"><h2>Jahr 2016</h2><p>Inhalte für 2016</p></div>
+    <div class="page"><h2>Jahr 2017</h2><p>Inhalte für 2017</p></div>
+    <div class="page"><h2>Jahr 2018</h2><p>Inhalte für 2018</p></div>
+    <div class="page"><h2>Jahr 2019</h2><p>Inhalte für 2019</p></div>
+    <div class="page"><h2>Jahr 2020</h2><p>Inhalte für 2020</p></div>
+    <div class="page"><h2>Jahr 2021</h2><p>Inhalte für 2021</p></div>
+    <div class="page"><h2>Jahr 2022</h2><p>Inhalte für 2022</p></div>
+    <div class="page"><h2>Jahr 2023</h2><p>Inhalte für 2023</p></div>
+    <div class="page"><h2>Jahr 2024</h2><p>Inhalte für 2024</p></div>
+    <div class="page"><h2>Jahr 2025</h2><p>Inhalte für 2025</p></div>
   </div>
-
-  <div class="nav-buttons">
-    <button onclick="prevPage()">Zurück</button>
-    <button onclick="nextPage()">Weiter</button>
-  </div>
-
-  <script>
-    const book = document.getElementById('book');
-    let currentPage = 0;
-    const startYear = 2010;
-    const endYear = 2025;
-
-    // Seiten dynamisch erzeugen
-    for (let year = startYear; year <= endYear; year++) {
-      const page = document.createElement('div');
-      page.className = 'page';
-      page.innerHTML = `
-        <h2>Jahr ${year}</h2>
-        <p>Hier kannst du Inhalte, Ereignisse oder Erinnerungen aus dem Jahr ${year} einfügen.</p>
-      `;
-      page.style.zIndex = (endYear - year + 1).toString();
-      book.appendChild(page);
-    }
-
-    const pages = document.querySelectorAll('.page');
-
-    function updatePages() {
-      // Blättereffekt nur bei großen Bildschirmen
-      if (window.innerWidth > 768) {
-        pages.forEach((page, index) => {
-          if (index <= currentPage) {
-            page.classList.add('flipped');
-          } else {
-            page.classList.remove('flipped');
-          }
-        });
-      }
-    }
-
-    function nextPage() {
-      if (currentPage < pages.length - 1) {
-        currentPage++;
-        updatePages();
-      }
-    }
-
-    function prevPage() {
-      if (currentPage > 0) {
-        currentPage--;
-        updatePages();
-      }
-    }
-
-    // Initiale Anzeige
-    updatePages();
-  </script>
 </body>
 </html>
