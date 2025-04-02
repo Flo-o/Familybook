@@ -1,0 +1,27 @@
+body {
+  background: #f0e6d6;
+  font-family: Georgia, serif;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+#flipbook {
+  width: 800px;
+  height: 500px;
+}
+
+#flipbook .page {
+  background: #fffbe7;
+  border: 1px solid #ccc;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+#flipbook .hard {
+  background: #d9c8a9;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  line-height: 500px;
+}
