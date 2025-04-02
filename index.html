@@ -1,30 +1,29 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Familienbuch: Jahre 2010–2025</title>
   <style>
     body {
       margin: 0;
       background: #f0e6d6;
       font-family: 'Georgia', serif;
-      overflow: hidden;
     }
 
     .book {
       position: relative;
       width: 90%;
       max-width: 800px;
-      height: 90vh;
-      margin: 5vh auto;
+      margin: 0 auto;
+      padding-top: 20px;
       perspective: 2000px;
     }
 
     .page {
       position: absolute;
       width: 100%;
-      height: 100%;
+      height: 80vh;
       background: #fffbe7;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       border: 1px solid #ccc;
@@ -33,6 +32,7 @@
       padding: 40px;
       box-sizing: border-box;
       backface-visibility: hidden;
+      overflow-y: auto;
     }
 
     .page h2 {
@@ -46,7 +46,7 @@
 
     .nav-buttons {
       text-align: center;
-      margin-top: 20px;
+      margin: 20px;
     }
 
     .nav-buttons button {
@@ -54,6 +54,26 @@
       margin: 0 10px;
       font-size: 16px;
       cursor: pointer;
+    }
+
+    /* Mobile Ansicht */
+    @media (max-width: 768px) {
+      .book {
+        perspective: none;
+      }
+
+      .page {
+        position: static;
+        transform: none !important;
+        height: auto;
+        margin-bottom: 20px;
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+
+      .nav-buttons {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -88,13 +108,16 @@
     const pages = document.querySelectorAll('.page');
 
     function updatePages() {
-      pages.forEach((page, index) => {
-        if (index <= currentPage) {
-          page.classList.add('flipped');
-        } else {
-          page.classList.remove('flipped');
-        }
-      });
+      // Blättereffekt nur bei großen Bildschirmen
+      if (window.innerWidth > 768) {
+        pages.forEach((page, index) => {
+          if (index <= currentPage) {
+            page.classList.add('flipped');
+          } else {
+            page.classList.remove('flipped');
+          }
+        });
+      }
     }
 
     function nextPage() {
@@ -110,6 +133,9 @@
         updatePages();
       }
     }
+
+    // Initiale Anzeige
+    updatePages();
   </script>
 </body>
 </html>
