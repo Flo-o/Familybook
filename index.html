@@ -3,139 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Familienbuch: Jahre 2010–2025</title>
-  <style>
-    body {
-      margin: 0;
-      background: #f0e6d6;
-      font-family: 'Georgia', serif;
-    }
-
-    .book {
-      position: relative;
-      width: 90%;
-      max-width: 800px;
-      margin: 0 auto;
-      padding-top: 20px;
-      perspective: 2000px;
-    }
-
-    .page {
-      position: absolute;
-      width: 100%;
-      height: 80vh;
-      background: #fffbe7;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      border: 1px solid #ccc;
-      transform-origin: left;
-      transition: transform 1s ease;
-      padding: 40px;
-      box-sizing: border-box;
-      backface-visibility: hidden;
-      overflow-y: auto;
-    }
-
-    .page h2 {
-      margin-top: 0;
-    }
-
-    .page.flipped {
-      transform: rotateY(-180deg);
-      z-index: 0;
-    }
-
-    .nav-buttons {
-      text-align: center;
-      margin: 20px;
-    }
-
-    .nav-buttons button {
-      padding: 10px 20px;
-      margin: 0 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* Mobile Ansicht */
-    @media (max-width: 768px) {
-      .book {
-        perspective: none;
-      }
-
-      .page {
-        position: static;
-        transform: none !important;
-        height: auto;
-        margin-bottom: 20px;
-        box-shadow: none;
-        border: 1px solid #ccc;
-      }
-
-      .nav-buttons {
-        display: none;
-      }
-    }
-  </style>
+  <title>Familienbuch</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="book" id="book">
-    <!-- Seiten werden per JavaScript eingefügt -->
+  <div id="flipbook">
+    <!-- Seiten von 2010 bis 2025 -->
+    <div class="hard">Deckblatt</div>
+    <!-- Dynamisch generierte Seiten -->
+    <!-- Das machen wir gleich per JS -->
+    <div class="hard">Ende</div>
   </div>
 
-  <div class="nav-buttons">
-    <button onclick="prevPage()">Zurück</button>
-    <button onclick="nextPage()">Weiter</button>
-  </div>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="turn.min.js"></script>
   <script>
-    const book = document.getElementById('book');
-    let currentPage = 0;
-    const startYear = 2010;
-    const endYear = 2025;
-
-    // Seiten dynamisch erzeugen
-    for (let year = startYear; year <= endYear; year++) {
-      const page = document.createElement('div');
-      page.className = 'page';
-      page.innerHTML = `
-        <h2>Jahr ${year}</h2>
-        <p>Hier kannst du Inhalte, Ereignisse oder Erinnerungen aus dem Jahr ${year} einfügen.</p>
-      `;
-      page.style.zIndex = (endYear - year + 1).toString();
-      book.appendChild(page);
+    // Dynamisch Seiten einfügen
+    const flipbook = document.getElementById("flipbook");
+    for (let year = 2010; year <= 2025; year++) {
+      const page = document.createElement("div");
+      page.className = "page";
+      page.innerHTML = `<h2>${year}</h2><p>Inhalte für ${year}</p>`;
+      flipbook.insertBefore(page, flipbook.children[flipbook.children.length - 1]);
     }
 
-    const pages = document.querySelectorAll('.page');
-
-    function updatePages() {
-      // Blättereffekt nur bei großen Bildschirmen
-      if (window.innerWidth > 768) {
-        pages.forEach((page, index) => {
-          if (index <= currentPage) {
-            page.classList.add('flipped');
-          } else {
-            page.classList.remove('flipped');
-          }
-        });
-      }
-    }
-
-    function nextPage() {
-      if (currentPage < pages.length - 1) {
-        currentPage++;
-        updatePages();
-      }
-    }
-
-    function prevPage() {
-      if (currentPage > 0) {
-        currentPage--;
-        updatePages();
-      }
-    }
-
-    // Initiale Anzeige
-    updatePages();
+    // turn.js starten
+    $('#flipbook').turn({
+      width: 800,
+      height: 500,
+      autoCenter: true,
+      gradients: true,
+      elevation: 50
+    });
   </script>
 </body>
 </html>
